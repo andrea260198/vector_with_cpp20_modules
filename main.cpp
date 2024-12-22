@@ -1,5 +1,7 @@
-import my_module;
+#include <ranges>
+
 import std;
+import my_module;
 
 
 int main()
@@ -9,8 +11,12 @@ int main()
     v.push_back(123);
     v.push_back(456);
     v.push_back(789);
+    v.push_back(12);
+    v.push_back(23);
+    v.push_back(34);
+    v.push_back(45);
 
-    std::cout << v.get(0) << std::endl;
-    std::cout << v.get(1) << std::endl;
-    std::cout << v.get(2) << std::endl;
+    for (int k : std::views::iota(0, 7)) {
+        std::cout << v.get(k) << std::endl;
+    }
 }
