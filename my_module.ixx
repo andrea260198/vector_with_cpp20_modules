@@ -45,8 +45,7 @@ namespace my_ns {
 
             mpMemory = new T[mMaxSize];
             for (int i = 0; i < oldMaxSize; i++) {
-                auto value = pOldMemory[i];
-                mpMemory[i] = value;
+                mpMemory[i] = std::move(pOldMemory[i]);
             }
 
             delete[] pOldMemory;
