@@ -1,9 +1,11 @@
 module;
 #include <stdexcept>
+//#include <iostream>
 
 export module my_module;
 
-//import <iostream>;
+
+import std;
 
 
 namespace my_ns {
@@ -15,7 +17,7 @@ namespace my_ns {
         }
 
         void push_back(T value) {
-            if (mSize > mMaxSize) {
+            if (mSize >= mMaxSize) {
                 resize_memory();
             }
             mpMemory[mSize] = value;
@@ -32,17 +34,19 @@ namespace my_ns {
 
     private:
         int mSize = 0;
-        int mMaxSize = 1024;
+        int mMaxSize = 2;
         T* mpMemory;
 
         void resize_memory() {
+            std::cout << "Vector memory has been resized.\n";
             auto oldMaxSize = mMaxSize;
             mMaxSize *= 2;
             auto pOldMemory = mpMemory;
 
             mpMemory = new T[mMaxSize];
             for (int i = 0; i < oldMaxSize; i++) {
-                mpMemory[i] = std::move(pOldMemory[i]);
+                auto value = pOldMemory[i];
+                mpMemory[i] = value;
             }
 
             delete[] pOldMemory;
