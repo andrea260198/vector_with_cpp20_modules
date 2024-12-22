@@ -1,5 +1,5 @@
-//module;
-//#include <iostream>
+module;
+#include <stdexcept>
 
 export module my_module;
 
@@ -11,21 +11,41 @@ namespace my_ns {
     class Vector final {
     public:
         Vector() {
-            memory_p = new T[max_size];
+            mpMemory = new T[mMaxSize];
         }
 
         void push_back(T value) {
-            memory_p[size] = value;
-            size++;
+            if (mSize > mMaxSize) {
+                resize_memory();
+            }
+            mpMemory[mSize] = value;
+            mSize++;
         }
 
         T get(int position) {
-            return memory_p[position];
+            if (position < mSize) {
+                return mpMemory[position];
+            } else {
+                throw std::out_of_range("Index must be smaller than vector size.");
+            }
         }
 
     private:
-        int size = 0;
-        int max_size = 1024;
-        T* memory_p;
+        int mSize = 0;
+        int mMaxSize = 1024;
+        T* mpMemory;
+
+        void resize_memory() {
+            auto oldMaxSize = mMaxSize;
+            mMaxSize *= 2;
+            auto pOldMemory = mpMemory;
+
+            mpMemory = new T[mMaxSize];
+            for (int i = 0; i < oldMaxSize; i++) {
+                mpMemory[i] = std::move(pOldMemory[i]);
+            }
+
+            delete[] pOldMemory;
+        }
     };
 }
