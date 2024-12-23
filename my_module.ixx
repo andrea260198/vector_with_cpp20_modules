@@ -1,10 +1,8 @@
 module;
 #include <stdexcept>
+#include <iostream>
 
 export module my_module;
-
-
-import std;
 
 
 namespace my_ns {
