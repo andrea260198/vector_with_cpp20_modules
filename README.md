@@ -5,4 +5,4 @@ In this repo I want to show a vector implementation with the use of C++20 module
 
 # Build
 
-The project can be build using MSBuild or using xmake.
+The project can be built using MSBuild or using xmake.
